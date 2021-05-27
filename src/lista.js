@@ -70,9 +70,8 @@ module.exports = class Lista {
             // Buscar la clave en el array y borrar.
             var indx = this.findIndex(this.#elementos, clave);
             if (indx != -1)
-                    this.#elementos.splice(indx, 1);
-            }
-        
+                this.#elementos.splice(indx, 1);
+        }
         return NaN;
     }
 }
