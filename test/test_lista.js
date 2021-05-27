@@ -38,15 +38,15 @@ describe("Cuando se agrega un elemento a una lista vacia", function () {
     var lista = new Lista();
     lista.add("clave", "valor");
 
-    it("Agrego un elemento a la lista vacia", function () {
+    it("Hay un elemento en la lista", function () {
         assert.equal(lista.count(), 1);
     })
 
-    it("Obtengo valor a partir de clave", function () {
+    it("Hay un valor asociado a una clave", function () {
         assert.equal(lista.find("clave"), "valor");
     })
 
-    it("Pido un valor a partir de clave que no existe", function () {
+    it("No hay valor asociado a una clave inexistente", function () {
         assert.isNaN(lista.find("claveInexistente"));
     })
 })
@@ -56,19 +56,15 @@ describe("Cuando se agrega un elemento a una lista que ya tiene un elemento", fu
     lista.add("clave", "valor");
     lista.add("claveDos", "valorDos");
 
-    it("Agrego un elemento a la lista que tiene 1 elemento", function () {
+    it("Hay 2 elementos en la lista", function () {
         assert.equal(lista.count(), 2);
     })
 
-    it("Agrego un elemento a la lista que ya tiene 1 elemento. Ahora, hay 2 elementos.", function () {
-        assert.equal(lista.count(), 2);
-    })
-
-    it("Obtengo valor a partir de la clave", function () {
+    it("Hay un valor asociado a la clave del primer elemento de la lista", function () {
         assert.equal(lista.find("clave"), "valor");
     })
 
-    it("Obtengo valor del 2do elemento a partir de la clave", function () {
+    it("Hay un valor asociado a la clave del segundo elemento de la lista", function () {
         assert.equal(lista.find("claveDos"), "valorDos");
     })
 })
@@ -82,15 +78,15 @@ describe("Cuando se agrega un elemento a una lista que ya tiene 4 elemento", fun
 
     lista.add("claveCinco", "valor5");
 
-    it("Agrego un elemento a la lista que tiene 4 elementos", function () {
+    it("Hay 5 elementos en la lista", function () {
         assert.equal(lista.count(), 5);
     })
 
-    it("Obtengo valor a partir de la clave", function () {
+    it("Hay un valor asociado a la clave del quinto elemento de la lista", function () {
         assert.equal(lista.find("claveCinco"), "valor5");
     })
 
-    it("Obtengo valor del 3er elemento a partir de la clave", function () {
+    it("Hay un valor asociado a la clave del tercer elemento de la lista", function () {
         assert.equal(lista.find("claveTres"), "valor3");
     })
 })
@@ -98,9 +94,9 @@ describe("Cuando se agrega un elemento a una lista que ya tiene 4 elemento", fun
 describe("Cuando se agrega un elemento con una clave existente se actualiza el valor", function () {
     var lista = new Lista();
     lista.add("clave", "valor");
+    lista.add("clave", "valorActualizado");
 
-    it("Agrego un valor a clave existente y se actualiza", function () {
-        lista.add("clave", "valorActualizado");
+    it("Valor del elemento actualizado a partir de su clave", function () {
         assert.equal(lista.find("clave"), "valorActualizado");
         assert.equal(lista.count(), 1);
     })
@@ -109,19 +105,19 @@ describe("Cuando se agrega un elemento con una clave existente se actualiza el v
 describe("Cuando se agrega un elemento a una lista vacia la clave debe contener solamente \
 cadenas de texto", function () {
     var lista = new Lista();
+    lista.add("clave", "valor");
+    lista.add( 34, "valor");
+    lista.add("", "valor");
 
-    it("Agrego un elemento con clave que cumple condicion", function () {
-        lista.add("clave", "valor");
+    it("La clave cumple condicion", function () {
         assert.equal(lista.count(), 1);
     })
 
-    it("Agrego un elemento con clave que NO cumple condicion", function () {
-        lista.add("clave2", "valor");
+    it("La clave NO cumple condicion", function () {
         assert.equal(lista.count(), 1);
     })
 
-    it("Agrego un elemento con clave vacia", function () {
-        lista.add("", "valor");
+    it("La clave NO cumple condicion", function () {
         assert.equal(lista.count(), 1);
     })
 })
@@ -131,14 +127,14 @@ describe("Cuando se agrega un elemento a una lista con elementos la clave debe \
     var lista = new Lista();
     lista.add("clave", "valor");
     lista.add("claveDos", "valor2");
+    lista.add("claveTest", "valor1234");
+    lista.add(12.34, "1234");
 
-    it("Agrego un elemento con clave que cumple condicion", function () {
-        lista.add("claveTest", "valor1234");
+    it("La clave cumple condicion", function () {
         assert.equal(lista.count(), 3);
     })
 
-    it("Agrego un elemento con clave que NO cumple condicion", function () {
-        lista.add("clave$!@#$%*()", "1234");
+    it("La clave NO cumple condicion", function () {
         assert.equal(lista.count(), 3);
     })
 })
@@ -147,7 +143,7 @@ describe("Agrego un elemento con clave vacia a una lista con 0 elementos", funct
     var lista = new Lista();
     lista.add("", "valor");
 
-    it("Agrego un elemento con clave vacia", function () {
+    it("La clave NO cumple condicion", function () {
         assert.equal(lista.count(), 0);
     })
 })
@@ -158,7 +154,7 @@ describe("Obtengo lista de claves ordenada alfateticamente cuando las claves no 
     lista.add("claveF", "valor");
     lista.add("claveA", "loquesea");
 
-    it("Obtengo lista de claves ordenada alfabeticamente", function () {
+    it("Lista de claves ordenada alfabeticamente", function () {
         assert.sameOrderedMembers (lista.claves(), ["claveA","claveF","claveZ"]);
     })
 })
@@ -169,7 +165,7 @@ describe("Obtengo lista de claves ordenada alfateticamente cuando las claves ya 
     lista.add("claveF", "valor");
     lista.add("claveZ", "loquesea");
 
-    it("Obtengo lista de claves ordenada alfabeticamente", function () {
+    it("Lista de claves ordenada alfabeticamente", function () {
         assert.sameOrderedMembers (lista.claves(), ["claveA","claveF","claveZ"]);
     })
 })
@@ -177,10 +173,14 @@ describe("Obtengo lista de claves ordenada alfateticamente cuando las claves ya 
 describe("Elimino un elementos por su clave en una lista con 1 elemento", function () {
     var lista = new Lista();
     lista.add("claveA", "valor");
+    lista.delete("claveA");
 
-    it("Elimino un elemento por su clave", function () {
-        lista.delete("claveA");
+    it("Hay 0 elementos en la lista", function () {
         assert.equal(lista.count(), 0);
+    })
+
+    it("No hay valor asociado a la clave 'ClaveA'", function () {
+        assert.isNaN(lista.find("claveA"));
     })
 })
 
@@ -188,18 +188,47 @@ describe("Elimino un elementos por su clave en una lista con 2 elementos", funct
     var lista = new Lista();
     lista.add("claveA", "valor");
     lista.add("claveB", "valorB");
+    lista.delete("claveA");
 
-    it("Elimino un elemento por su clave", function () {
-        lista.delete("claveA");
+    it("Hay 1 elemento en la lista", function () {
         assert.equal(lista.count(), 1);
+        assert.equal(lista.find("claveB"), "valorB");
+    })
+
+    it("No hay valor asociado a la clave 'ClaveA'", function () {
+        assert.isNaN(lista.find("claveA"));
+    })
+
+    it("Hay un valor asociado a la clave 'claveB'", function () {
         assert.equal(lista.find("claveB"), "valorB");
     })
 })
 
 describe("Elimino un elementos por su clave en una lista con 0 elemento", function () {
     var lista = new Lista();
+    lista.delete("claveA");
 
-    it("Intento eliminar un elemento por su clave", function () {
-        assert.isNaN(lista.delete("claveA"));
+    it("Hay 0 elementos en la lista", function () {
+        assert.equal(lista.count(), 0);
+    })
+})
+
+describe("Elimino un elemento que no esta en una lista con 2 elementos", function () {
+    var lista = new Lista();
+    lista.add("claveA", "valor");
+    lista.add("claveB", "valorB");
+    lista.delete("claveNoEsta");
+
+    it("Hay 2 elementos en la lista", function () {
+        assert.equal(lista.count(), 2);
+        //assert.isNaN(lista.delete("claveA"));
+    })
+
+    it("Hay un valor asociado a la clave del primer elemento de la lista", function () {
+        assert.equal(lista.find("claveA"), "valor");
+    })
+
+    it("Hay un valor asociado a la clave del segundo elemento de la lista", function () {
+        assert.equal(lista.find("claveB"), "valorB");
     })
 })

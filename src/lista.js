@@ -4,6 +4,16 @@ module.exports = class Lista {
     constructor() {
         this.#elementos = [];
     }
+
+    // Devuelve el indice del elemento de la lista que corresponde a la clave.
+    findIndex(elementos, clave) {
+        for (var i = 0; i < elementos.length; i++) {
+            if (elementos[i].clave == clave)
+                return i;
+        }
+        return -1;
+    }
+
     // Devuelve cantidad de elementos de la lista.
     count() {
         return this.#elementos.length;
@@ -13,27 +23,27 @@ module.exports = class Lista {
     find(clave) {
         // Verifico que la lista contenga al menos 1 elemento.
         if (this.#elementos.length >= 1) {
-            // Buscar la clave en el array y devolver el valor.
-            for (var i = 0; i < this.#elementos.length; i++) {
-                if (this.#elementos[i].clave == clave)
-                    return this.#elementos[i].valor;
-            }
+            // Buscar la clave en el array y devolver el indice.
+            var indx = this.findIndex(this.#elementos, clave);
+            if (indx != -1)
+                return this.#elementos[indx].valor;
+            else
+                return NaN;
         }
         return NaN;
     }
+
     // Inserta un elemento a la lista.
     add(clave, valor) {
         // Verifico que la clave sea una cadena de texto.
         if (/^[a-zA-Z]+$/.test(clave)) {
             // Busco si la clave ya existe.
             if (this.#elementos.length >= 1) {
-                for (var i = 0; i < this.#elementos.length; i++) {
-                    if (this.#elementos[i].clave == clave)
-                        this.#elementos[i].valor = valor;
-                    else {
-                        this.#elementos.push({ clave, valor });
-                        break;
-                    }
+                var indx = this.findIndex(this.#elementos, clave);
+                if (indx != -1)
+                    this.#elementos[indx].valor = valor;
+                else {
+                    this.#elementos.push({ clave, valor });
                 }
             }
             else
@@ -58,11 +68,11 @@ module.exports = class Lista {
         // Verifico que la lista contenga al menos 1 elemento.
         if (this.#elementos.length >= 1) {
             // Buscar la clave en el array y borrar.
-            for (var i = 0; i < this.#elementos.length; i++) {
-                if (this.#elementos[i].clave == clave)
-                    this.#elementos.splice(i, 1);
+            var indx = this.findIndex(this.#elementos, clave);
+            if (indx != -1)
+                    this.#elementos.splice(indx, 1);
             }
-        }
+        
         return NaN;
     }
 }
