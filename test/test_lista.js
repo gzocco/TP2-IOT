@@ -102,49 +102,25 @@ describe("Cuando se agrega un elemento con una clave existente se actualiza el v
     })
 })
 
-describe("Cuando se agrega un elemento a una lista vacia la clave debe contener solamente \
-cadenas de texto", function () {
-    var lista = new Lista();
-    lista.add("clave", "valor");
-    lista.add( 34, "valor");
-    lista.add("", "valor");
+describe("Cuando se agrega un elemento a una lista vacia con clave que no cumple la condicion",
+    function () {
+        var lista = new Lista();
+        lista.add(34, "valor");
 
-    it("La clave cumple condicion", function () {
-        assert.equal(lista.count(), 1);
+        it("La clave NO cumple la condicion", function () {
+            assert.equal(lista.count(), 0);
+        })
     })
 
-    it("La clave NO cumple condicion", function () {
-        assert.equal(lista.count(), 1);
-    })
-
-    it("La clave NO cumple condicion", function () {
-        assert.equal(lista.count(), 1);
-    })
-})
-
-describe("Cuando se agrega un elemento a una lista con elementos la clave debe \
- contener solamente cadenas de texto", function () {
+describe("Cuando se agrega un elemento a una lista con elementos con clave que no cumple la condicion",
+ function () {
     var lista = new Lista();
     lista.add("clave", "valor");
     lista.add("claveDos", "valor2");
     lista.add("claveTest", "valor1234");
     lista.add(12.34, "1234");
-
-    it("La clave cumple condicion", function () {
-        assert.equal(lista.count(), 3);
-    })
-
     it("La clave NO cumple condicion", function () {
         assert.equal(lista.count(), 3);
-    })
-})
-
-describe("Agrego un elemento con clave vacia a una lista con 0 elementos", function () {
-    var lista = new Lista();
-    lista.add("", "valor");
-
-    it("La clave NO cumple condicion", function () {
-        assert.equal(lista.count(), 0);
     })
 })
 
@@ -155,7 +131,7 @@ describe("Obtengo lista de claves ordenada alfateticamente cuando las claves no 
     lista.add("claveA", "loquesea");
 
     it("Lista de claves ordenada alfabeticamente", function () {
-        assert.sameOrderedMembers (lista.claves(), ["claveA","claveF","claveZ"]);
+        assert.sameOrderedMembers(lista.claves(), ["claveA", "claveF", "claveZ"]);
     })
 })
 
@@ -166,7 +142,7 @@ describe("Obtengo lista de claves ordenada alfateticamente cuando las claves ya 
     lista.add("claveZ", "loquesea");
 
     it("Lista de claves ordenada alfabeticamente", function () {
-        assert.sameOrderedMembers (lista.claves(), ["claveA","claveF","claveZ"]);
+        assert.sameOrderedMembers(lista.claves(), ["claveA", "claveF", "claveZ"]);
     })
 })
 
